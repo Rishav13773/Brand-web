@@ -1,0 +1,270 @@
+body {
+    margin: 1.5em;
+    font-family: 'Poppins', sans-serif;
+}
+
+a {     //remove all hyperlink text underlines
+    text-decoration: none;
+    font-size: 1.3rem;
+}
+
+.hero-img {   //styling first img
+    position: absolute;     
+    top: 0;
+    left: 0;          //note top, left etc attributes are only related absolute
+    background: url('../images/shoe1.jpg');
+    background-size: cover; // these properties will make the frame fixed but the img in it moving with x and y properties
+    background-position-x: 20%;
+    background-position-y: 20%;
+    width: 100%;    
+    height: 100vh;  //we use vh for height
+    z-index: -1;    // z makes a img to fall behind or in front of other elements, also its for absolute only
+    animation: introLoad 2s forwards; //for animation @keyframe
+}
+
+.logo { //styling shoeBrand logo
+    color: white;
+    font-weight: bold;
+}
+
+nav {
+    position: fixed; //now fixed means if when we scroll the element wont go away
+    right: 0;   //fixing it to the right side
+    top: 0;
+    background: white; 
+    height: 100vh;  //it length the height of the white menu page see browser for reference 
+    width: 50%;
+    z-index: 999;
+    text-transform: uppercase; //make all text uppercase
+    transform: translateX(100%);
+    transition: transform .5s ease-in-out;  //for transition refernce    
+
+    ul {
+        list-style: none; //get rid of black bullet marks near text
+        padding: 0;
+        margin-top: 8em;
+
+        a {
+            color: black;
+            padding: .75em 2em; //so padding on hyperlink element wont work until display is not block
+            display: block;
+
+            &:hover {
+                background: rgb(232, 232, 232);
+            }
+        }
+    }
+
+    .close {
+        float: right;
+        margin: 2em;
+        width: 2.5em;
+    }
+}
+
+//first section
+header {       
+    display: flex; //place items in coloum form
+    justify-content: space-between;
+
+    svg {
+        width: 3em;
+        margin-top: -.6em;
+        cursor: pointer;
+    }
+}
+
+// second section
+h1 {
+    font-size: 3rem;
+    margin: 2em;
+    line-height: 3.3rem;
+}
+
+.subhead {
+    font-size: 1.4rem;
+}
+
+section.hero {      
+    color: white;
+    height: 90vh;
+    animation: moveDown 1s ease-in-out forwards;
+    opacity: 0;
+
+    .down-arrow {
+        stroke: white;
+        position: absolute;
+        bottom: 2em;
+        width: 1em;
+        animation: moveArrow 1s alternate-reverse infinite;  
+        path {
+            fill: white;
+        }
+    }
+}
+
+//third section 
+section.more-info {
+    img {
+        width: 100%;
+        object-fit: cover; // so this property will make all images under img tag to fit equally
+        height: 11em;
+    }
+
+    .title {
+        font-weight: bold;
+        font-size: 1.25rem;
+    }
+
+    .desc {
+        line-height: 1.5rem;
+    }
+    
+}
+
+.open-nav {
+    transform: translateX(0%);
+}
+
+// breaking points of our layout
+@media only screen and (min-width:680px) { // this is basically mean that if we enlarge our browser and its width goes over 680 all porperties under this rule sheet will execute
+
+    body {
+        margin: 1.5em 5em;
+        font-family: 'Poppins', sans-serif;
+    }
+}
+
+@media only screen and (min-width:920px) { // this is basically mean that if we enlarge our browser and its width goes over 680 all porperties under this rule sheet will execute
+    .menu {
+        display: none;
+    }
+    nav {         //now we make our white menu navigation bar disappear when page size reaches 920px
+        transform: translateX(0);
+        position: unset;
+        display: block;
+        width: auto;
+        height: auto;
+        background: none;
+
+        svg.close {     //removing that cross logo 
+            display: none;
+        }
+
+        ul {
+            display: flex; //making all the ul elements in coloum order
+            margin: 0;
+            
+            a {
+                color: white;
+                padding: .5em 1.5em;
+                font-size: .9rem;
+
+                &:hover{
+                    background: none;
+                    font-weight: bold;
+                }
+            }
+        }
+    }
+
+    .hero-img {
+        left: unset;
+        right: 0;
+        width: 50%;
+        height: 42em;
+    }
+
+    .logo {
+        color: black;
+
+        span {
+            color: red;
+        }
+    }
+    section.hero {
+        color: black;
+        height: auto;
+        width: 40%;
+        margin-bottom: 8em;
+
+        h1 {
+            margin-left: -.2em;
+        }
+
+        svg.down-arrow {   //our arrow 
+            stroke: black;
+            position: unset;
+
+            path {
+                fill: black;
+            }
+        }
+        
+    }
+    .feature {
+        display: grid;
+        grid-template-columns: repeat(2,auto);
+        gap: 3em;
+        margin-bottom: 8em;
+        width: 100%;
+
+        }
+
+    .feature-left {
+        display: grid;
+        grid-template-columns: repeat(2,auto);
+        gap: 3em;
+        margin-bottom: 8em;
+        //width: 25em;
+        grid-template-areas: 
+        "left right";
+    
+        img {
+            grid-area: left;
+        }
+
+        @media only screen and (min-width:1086px) {
+            .wrapper {
+                width: 1086px;
+                margin: 0 auto;
+            }
+
+            .feature {
+                gap: 0;
+            }
+        }
+    }
+}
+
+@keyframes introLoad {
+    from {
+        clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+    }
+    to {
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+
+    }
+}
+
+@keyframes moveArrow {
+    from {
+        transform: translateY(-30px);
+    }
+    to {
+        transform: translateY(0);
+
+    }
+}
+
+@keyframes moveDown {
+    from {
+        transform: translateY(-100px);
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+
+    }
+}
+
